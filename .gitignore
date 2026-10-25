@@ -1,0 +1,24 @@
+# Godot
+.godot/
+
+# Build output
+build/
+workers/game/public/
+public/
+
+# Cloudflare local state
+.wrangler/
+workers/*/.wrangler/
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs / secrets / archives
+*.log
+.env
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db

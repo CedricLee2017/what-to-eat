@@ -1,0 +1,16 @@
+name = "what-to-eat-leaderboard"
+main = "src/index.js"
+compatibility_date = "2026-10-25"
+workers_dev = true
+
+[vars]
+# 上線後改成你隻遊戲嘅 origin，例如 "https://what-to-eat.pages.dev"
+# 多個 origin 可以用逗號分隔。開發時用 "*"。
+ALLOWED_ORIGIN = "https://what-to-eat-game.leechungkit2011.workers.dev,http://127.0.0.1:8000,http://localhost:8000"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "what-to-eat-leaderboard"
+# 建立 D1 後，用 `npx wrangler d1 create what-to-eat-leaderboard`
+# 將回傳嘅 database_id 貼落下面。本地測試可以用呢個 placeholder。
+database_id = "396b2609-2639-41d9-8e5b-dbeeff65cfaa"

@@ -553,8 +553,8 @@ func _draw_pan() -> void:
 	draw_style_box(UIKit.box(UIKit.SUN_SOFT, 6), Rect2(left + width * 0.34, 104, width * 0.58, 16))
 	draw_style_box(UIKit.box(UIKit.MINT, 6), Rect2(left + width * 0.58, 104, width * 0.20, 16))
 	draw_style_box(UIKit.box(UIKit.CORAL if not _holding else UIKit.BROWN, 5), Rect2(left + width * _power - 4.0, 97, 8, 30))
-	draw_string(UIKit.font(true), Vector2(-256, 136), "生", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, UIKit.MUTED)
-	draw_string(UIKit.font(true), Vector2(238, 136), "燶", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(-256, 136), "生", HORIZONTAL_ALIGNMENT_LEFT, -1, 24, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(238, 136), "燶", HORIZONTAL_ALIGNMENT_LEFT, -1, 24, UIKit.MUTED)
 
 
 func _draw_deep_fry() -> void:
@@ -588,7 +588,7 @@ func _draw_deep_fry() -> void:
 			draw_arc(pos, ring, 0, TAU, 48, Color(1, 1, 1, 0.85), 3.0, true)
 	for i in range(3):
 		var x := -150.0 + 150.0 * float(i)
-		draw_string(UIKit.font(true), Vector2(x - 13, -98), str(i + 1), HORIZONTAL_ALIGNMENT_CENTER, 26, 24, UIKit.MUTED)
+		draw_string(UIKit.font(true), Vector2(x - 14, -98), str(i + 1), HORIZONTAL_ALIGNMENT_CENTER, 28, 26, UIKit.MUTED)
 
 
 func _draw_braise() -> void:
@@ -616,9 +616,9 @@ func _draw_braise() -> void:
 	draw_style_box(UIKit.box(UIKit.SUN_SOFT, 6), Rect2(target_left, 98, width * 0.34, 16))
 	draw_style_box(UIKit.box(UIKit.MINT, 6), Rect2(left + (_target - 0.065) * width, 97, width * 0.13, 18))
 	draw_style_box(UIKit.box(UIKit.CORAL, 5), Rect2(left + _knob * width - 5.0, 90, 10, 32))
-	draw_string(UIKit.font(true), Vector2(left, 142), "細火", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, UIKit.MUTED)
-	draw_string(UIKit.font(true), Vector2(-27, 142), "慢炆", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, UIKit.MUTED)
-	draw_string(UIKit.font(true), Vector2(180, 142), "猛火", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(left, 142), "細火", HORIZONTAL_ALIGNMENT_LEFT, -1, 24, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(-32, 142), "慢炆", HORIZONTAL_ALIGNMENT_LEFT, -1, 24, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(172, 142), "猛火", HORIZONTAL_ALIGNMENT_LEFT, -1, 24, UIKit.MUTED)
 
 
 func _draw_stew() -> void:
@@ -652,11 +652,11 @@ func _draw_stew() -> void:
 			if int(_order[j]) == i:
 				order_number = j + 1
 				break
-		var badge_pos := Vector2(rect.position.x + 21, rect.position.y + 20)
-		draw_circle(badge_pos, 16.0, UIKit.SUN_SOFT)
-		draw_arc(badge_pos, 16.0, 0.0, TAU, 32, UIKit.SUN, 2.0, true)
-		draw_string(UIKit.font(true), badge_pos + Vector2(-9, 7), str(order_number), HORIZONTAL_ALIGNMENT_CENTER, 18, 21, Color("#8A6216"))
-		draw_string(UIKit.font(true), Vector2(rect.position.x + 8, rect.position.y + 54), _stew_item_name(i), HORIZONTAL_ALIGNMENT_CENTER, tile_width - 16, 18, UIKit.INK)
+		var badge_pos := Vector2(rect.position.x + 23, rect.position.y + 23)
+		draw_circle(badge_pos, 20.0, UIKit.SUN_SOFT)
+		draw_arc(badge_pos, 20.0, 0.0, TAU, 32, UIKit.SUN, 2.0, true)
+		draw_string(UIKit.font(true), badge_pos + Vector2(-11, 9), str(order_number), HORIZONTAL_ALIGNMENT_CENTER, 22, 28, Color("#8A6216"))
+		draw_string(UIKit.font(true), Vector2(rect.position.x + 8, rect.position.y + 58), _stew_item_name(i), HORIZONTAL_ALIGNMENT_CENTER, tile_width - 16, 26, UIKit.INK)
 	# 計時
 	var elapsed_ratio := clampf(_stew_elapsed / 10.0, 0.0, 1.0)
 	draw_style_box(UIKit.box(UIKit.SAND, 5), Rect2(-180, 130, 360, 9))
@@ -685,9 +685,9 @@ func _draw_bake() -> void:
 	# 目標刻度 180
 	var target_angle := -2.35 + 0.5 * 4.7
 	draw_line(dial_center + Vector2(cos(target_angle), sin(target_angle)) * 28.0, dial_center + Vector2(cos(target_angle), sin(target_angle)) * 39.0, UIKit.MINT, 4.0, true)
-	draw_string(UIKit.font(true), Vector2(48, 116), "180", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#3F7D5F"))
-	draw_string(UIKit.font(true), Vector2(-238, 144), "120", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, UIKit.MUTED)
-	draw_string(UIKit.font(true), Vector2(196, 144), "240", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(46, 116), "180", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color("#3F7D5F"))
+	draw_string(UIKit.font(true), Vector2(-238, 144), "120", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(188, 144), "240", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, UIKit.MUTED)
 	draw_string(UIKit.font(true), Vector2(-80, -112), "%d°C" % int(round(_temp)), HORIZONTAL_ALIGNMENT_CENTER, 160, 30, UIKit.INK)
 
 
@@ -723,4 +723,4 @@ func _draw_steam() -> void:
 	# 進度
 	for i in range(3):
 		draw_circle(Vector2(228, -78.0 + 38.0 * float(i)), 12.0, UIKit.MINT if i < _steam_hits else UIKit.SAND)
-	draw_string(UIKit.font(true), Vector2(190, 58), "%d / 3" % _steam_hits, HORIZONTAL_ALIGNMENT_CENTER, 76, 20, UIKit.MUTED)
+	draw_string(UIKit.font(true), Vector2(188, 58), "%d / 3" % _steam_hits, HORIZONTAL_ALIGNMENT_CENTER, 80, 26, UIKit.MUTED)

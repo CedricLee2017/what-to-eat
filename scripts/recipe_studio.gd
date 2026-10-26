@@ -36,7 +36,7 @@ func _ready() -> void:
 	add_child(center)
 
 	var sheet := PanelContainer.new()
-	sheet.custom_minimum_size.x = 660.0
+	sheet.custom_minimum_size.x = 456.0
 	sheet.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 32, 20, Color.TRANSPARENT, 0, 24))
 	center.add_child(sheet)
 
@@ -59,9 +59,9 @@ func _ready() -> void:
 	_name_edit = LineEdit.new()
 	_name_edit.placeholder_text = "食物名稱（最多 12 字）"
 	_name_edit.max_length = 12
-	_name_edit.custom_minimum_size.y = 48
+	_name_edit.custom_minimum_size.y = 56
 	_name_edit.add_theme_font_override("font", UIKit.font(false))
-	_name_edit.add_theme_font_size_override("font_size", 18)
+	_name_edit.add_theme_font_size_override("font_size", UIKit.scaled_font(18))
 	_name_edit.add_theme_color_override("font_color", UIKit.INK)
 	_name_edit.add_theme_color_override("font_placeholder_color", Color(0.6, 0.56, 0.5, 0.6))
 	_name_edit.add_theme_stylebox_override("normal", UIKit.box(UIKit.CREAM, 16, 0, UIKit.LINE, 1, 12))
@@ -117,28 +117,32 @@ func _ready() -> void:
 		grid.add_child(button)
 		_item_buttons[str(item_id)] = button
 
-	var method_row := HBoxContainer.new()
-	method_row.add_theme_constant_override("separation", 5)
-	box.add_child(method_row)
-	method_row.add_child(UIKit.label("煮法", 13, UIKit.MUTED, false))
+	box.add_child(UIKit.label("煮法", 13, UIKit.MUTED, false))
+	var method_grid := GridContainer.new()
+	method_grid.columns = 3
+	method_grid.add_theme_constant_override("h_separation", 6)
+	method_grid.add_theme_constant_override("v_separation", 6)
+	box.add_child(method_grid)
 	for method_id in MealData.COOK_METHOD_ORDER:
 		var method_info := MealData.method_info(str(method_id))
-		var method_button := UIKit.button(str(method_info.name), UIKit.PAPER, UIKit.MUTED, 15, 13, true, Vector2(62, 34))
+		var method_button := UIKit.button(str(method_info.name), UIKit.PAPER, UIKit.MUTED, 15, 13, true, Vector2(0, 40))
+		method_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		method_button.pressed.connect(_set_method.bind(str(method_id)))
-		method_row.add_child(method_button)
+		method_grid.add_child(method_button)
 		_method_buttons[str(method_id)] = method_button
-	method_row.add_child(UIKit.spacer_h())
 
-	var form_row := HBoxContainer.new()
-	form_row.add_theme_constant_override("separation", 6)
-	box.add_child(form_row)
-	form_row.add_child(UIKit.label("上碟裝飾", 13, UIKit.MUTED, false))
+	box.add_child(UIKit.label("上碟裝飾", 13, UIKit.MUTED, false))
+	var form_grid := GridContainer.new()
+	form_grid.columns = 5
+	form_grid.add_theme_constant_override("h_separation", 6)
+	form_grid.add_theme_constant_override("v_separation", 6)
+	box.add_child(form_grid)
 	for form_id in MealData.CUSTOM_FORMS:
-		var form_button := UIKit.button(str(MealData.CUSTOM_FORM_NAMES[form_id]), UIKit.PAPER, UIKit.MUTED, 15, 12, true, Vector2(68, 34))
+		var form_button := UIKit.button(str(MealData.CUSTOM_FORM_NAMES[form_id]), UIKit.PAPER, UIKit.MUTED, 15, 12, true, Vector2(0, 40))
+		form_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		form_button.pressed.connect(_set_form.bind(str(form_id)))
-		form_row.add_child(form_button)
+		form_grid.add_child(form_button)
 		_form_buttons[str(form_id)] = form_button
-	form_row.add_child(UIKit.spacer_h())
 
 	_status = UIKit.label("", 11, UIKit.CORAL, true)
 	box.add_child(_status)

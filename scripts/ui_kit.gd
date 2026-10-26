@@ -21,6 +21,9 @@ static var GRAPE_SOFT := Color("#EEE7F6")
 static var SAND := Color("#F3E6CE")
 static var BROWN := Color("#9A6B4A")
 
+## 手機優先：520 闊舞台 + 字型曲線放大，令 390px 手機仍有足夠閱讀大小。
+static var control_scale := 1.25
+
 static var font_regular: Font
 static var font_bold: Font
 
@@ -34,6 +37,12 @@ static func setup() -> void:
 static func font(bold: bool = false) -> Font:
 	setup()
 	return font_bold if bold else font_regular
+
+
+## 小字放大比例較高，大標題保持原尺寸；避免手機上螞蟻字。
+static func scaled_font(size: int) -> int:
+	var factor := maxf(1.0, 1.55 - float(size) * 0.012)
+	return maxi(10, int(round(float(size) * factor)))
 
 
 static func make_theme() -> Theme:
@@ -73,7 +82,7 @@ static func label(text: String, size: int, color: Color, bold: bool = false) -> 
 	var label := Label.new()
 	label.text = text
 	label.add_theme_font_override("font", font(bold))
-	label.add_theme_font_size_override("font_size", size)
+	label.add_theme_font_size_override("font_size", scaled_font(size))
 	label.add_theme_color_override("font_color", color)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return label
@@ -81,7 +90,7 @@ static func label(text: String, size: int, color: Color, bold: bool = false) -> 
 
 static func wrapped(text: String, size: int, color: Color, bold: bool = false) -> Label:
 	var label := label(text, size, color, bold)
-	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return label
 
@@ -96,9 +105,9 @@ static func button(text: String, bg: Color, fg: Color, radius: int = 22, size: i
 	var node := Button.new()
 	node.text = text
 	node.focus_mode = Control.FOCUS_NONE
-	node.custom_minimum_size = min_size
+	node.custom_minimum_size = min_size * control_scale if min_size != Vector2.ZERO else Vector2.ZERO
 	node.add_theme_font_override("font", font(bold))
-	node.add_theme_font_size_override("font_size", size)
+	node.add_theme_font_size_override("font_size", scaled_font(size))
 	node.add_theme_color_override("font_color", fg)
 	node.add_theme_color_override("font_hover_color", fg)
 	node.add_theme_color_override("font_pressed_color", fg)

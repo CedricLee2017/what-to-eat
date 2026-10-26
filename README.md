@@ -48,6 +48,20 @@
 - 遊戲主畫面右上角有 **「目錄」**：自動存檔之後返標題，再撳「繼續上次」就可以返去原本進度。
 - 訪客都可以完整遊玩、存檔、創作、分享；只是標題會標示訪客。
 
+## 手機遊玩優化
+
+介面已由 720 闊改成 **520 闊手機優先舞台**；390×844 手機實際縮放約 0.75，字體比之前大 30–50%。
+
+- 小字（10–14）放大比例最高；標題（40+）保持原本大小，避免爆版。
+- 按鈕、輸入框、點擊區一齊放大（主要按鈕高度約 42–48px 實際像素）。
+- 主畫面、日結算、七日報告、圖鑑、食譜簿、排行榜都有垂直滾動。
+- 揀菜改成 **單欄大卡**，菜名唔會再被價格／煮法擠到變「…」。
+- 雪櫃、自由創作、創作食譜的選項改成 3–5 欄 grid，唔會橫向爆出。
+- 購買確認、自由創作、分享等對話框改成 **內容自適應高度**，唔會再有大大個空白。
+- 六種小遊戲：上方大字指示 bar + 遊戲內必要標籤；燉湯材料卡會顯示真實食材名同永久 1／2／3 次序。
+
+> 截圖已全部改用 390×844 手機尺寸；桌面版會自動放大，唔會影響操作。
+
 ## Pixel food art（第一版）
 
 `Desktop\food` 嘅 32×32 pixel art 已經接入遊戲：
@@ -352,7 +366,7 @@ powershell -ExecutionPolicy Bypass -File tools\deploy_cloudflare.ps1
 ```text
 what_to_eat/
 ├─ main.tscn                    主場景（只有一個 Control）
-├─ project.godot                720 × 1280、expand、gl_compatibility
+├─ project.godot                520 × 924（手機優先）、expand、gl_compatibility
 ├─ config/online.cfg             線上 API endpoint（留空 = 同源）
 ├─ workers/leaderboard/          Cloudflare Worker + D1 + 部署說明
 ├─ scripts/
@@ -491,7 +505,7 @@ powershell -ExecutionPolicy Bypass -File tools\serve.ps1
 - **健康不是道德審判**：五項指數是遊戲單位，鼓勵均衡與多樣，不提供真實營養建議。
 - **超休閒視覺**：奶油色底、圓角卡、珊瑚紅／薄荷綠／日光黃；角色、UI、圖示全部用 `_draw` 畫，菜式圖用 pixel-food 圖片 + `FoodArt` fallback。
 - **資料與畫面分離**：所有數值在 `data.gd` / `game_state.gd`，UI 只負責呈現，方便加菜或改平衡。
-- **桌面與手機**：720 闊舞台 + `expand`，手機填滿、桌面置中；所有互動都是大按鈕，支援滑鼠、觸控、Space / Enter。
+- **桌面與手機**：520 闊舞台 + `expand`，手機約 0.75–0.8 倍縮放；字型會按大小自動放大，小字加得更多、大標題保持原比例。主要畫面用 ScrollContainer，對話框盡量貼合螢幕。
 
 ## 已知限制 / 下一步
 

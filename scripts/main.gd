@@ -35,8 +35,8 @@ func _ready() -> void:
 	_stage.anchor_right = 0.5
 	_stage.anchor_top = 0.0
 	_stage.anchor_bottom = 1.0
-	_stage.offset_left = -360.0
-	_stage.offset_right = 360.0
+	_stage.offset_left = -260.0
+	_stage.offset_right = 260.0
 	_stage.offset_top = 0.0
 	_stage.offset_bottom = 0.0
 	_stage.mouse_filter = Control.MOUSE_FILTER_PASS

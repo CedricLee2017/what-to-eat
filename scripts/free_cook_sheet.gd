@@ -41,7 +41,7 @@ func _ready() -> void:
 	add_child(center)
 
 	var sheet := PanelContainer.new()
-	sheet.custom_minimum_size.x = 692.0
+	sheet.custom_minimum_size.x = 456.0
 	sheet.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 32, 22, Color.TRANSPARENT, 0, 22))
 	center.add_child(sheet)
 
@@ -64,9 +64,9 @@ func _ready() -> void:
 	_name_edit = LineEdit.new()
 	_name_edit.placeholder_text = "菜式名（可留空，自動命名）"
 	_name_edit.max_length = 12
-	_name_edit.custom_minimum_size.y = 44
+	_name_edit.custom_minimum_size.y = 54
 	_name_edit.add_theme_font_override("font", UIKit.font(false))
-	_name_edit.add_theme_font_size_override("font_size", 17)
+	_name_edit.add_theme_font_size_override("font_size", UIKit.scaled_font(17))
 	_name_edit.add_theme_color_override("font_color", UIKit.INK)
 	_name_edit.add_theme_color_override("font_placeholder_color", Color(0.6, 0.56, 0.5, 0.6))
 	_name_edit.add_theme_stylebox_override("normal", UIKit.box(UIKit.CREAM, 16, 0, UIKit.LINE, 1, 11))
@@ -78,10 +78,10 @@ func _ready() -> void:
 	preview_row.add_theme_constant_override("separation", 12)
 	box.add_child(preview_row)
 	var art_panel := UIKit.panel(UIKit.SUN_SOFT, 22, 0, Color.TRANSPARENT, 0, 6)
-	art_panel.custom_minimum_size = Vector2(148, 148)
+	art_panel.custom_minimum_size = Vector2(120, 120)
 	preview_row.add_child(art_panel)
 	_preview = DishArt.new()
-	_preview.custom_minimum_size = Vector2(136, 136)
+	_preview.custom_minimum_size = Vector2(108, 108)
 	_preview.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_preview.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	art_panel.add_child(_preview)
@@ -91,14 +91,13 @@ func _ready() -> void:
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	preview_row.add_child(info)
-	_preview_name = UIKit.label("未命名", 22, UIKit.INK, true)
-	preview_row.add_theme_constant_override("separation", 12)
+	_preview_name = UIKit.wrapped("未命名", 22, UIKit.INK, true)
 	info.add_child(_preview_name)
-	_cost_label = UIKit.label("揀材料開始", 12, UIKit.MUTED, false)
+	_cost_label = UIKit.wrapped("揀材料開始", 12, UIKit.MUTED, false)
 	info.add_child(_cost_label)
-	_method_line = UIKit.label("煮法：%s" % MealData.method_name(_method), 12, Color("#3F7D5F"), true)
+	_method_line = UIKit.wrapped("煮法：%s" % MealData.method_name(_method), 12, Color("#3F7D5F"), true)
 	info.add_child(_method_line)
-	info.add_child(UIKit.label("雪櫃有嘅材料會自動扣減；唔夠會問你補購。", 10, UIKit.MUTED, false))
+	info.add_child(UIKit.wrapped("雪櫃有嘅材料會自動扣減；唔夠會問你補購。", 10, UIKit.MUTED, false))
 
 	var ingredients_title := HBoxContainer.new()
 	box.add_child(ingredients_title)
@@ -128,17 +127,19 @@ func _ready() -> void:
 		grid.add_child(button)
 		_item_buttons[str(item_id)] = button
 
-	var method_row := HBoxContainer.new()
-	method_row.add_theme_constant_override("separation", 5)
-	box.add_child(method_row)
-	method_row.add_child(UIKit.label("煮法", 13, UIKit.MUTED, false))
+	box.add_child(UIKit.label("煮法", 13, UIKit.MUTED, false))
+	var method_grid := GridContainer.new()
+	method_grid.columns = 3
+	method_grid.add_theme_constant_override("h_separation", 6)
+	method_grid.add_theme_constant_override("v_separation", 6)
+	box.add_child(method_grid)
 	for method_id in MealData.COOK_METHOD_ORDER:
 		var method_info := MealData.method_info(str(method_id))
-		var method_button := UIKit.button(str(method_info.name), UIKit.PAPER, UIKit.MUTED, 15, 13, true, Vector2(75, 34))
+		var method_button := UIKit.button(str(method_info.name), UIKit.PAPER, UIKit.MUTED, 15, 13, true, Vector2(0, 40))
+		method_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		method_button.pressed.connect(_select_method.bind(str(method_id)))
-		method_row.add_child(method_button)
+		method_grid.add_child(method_button)
 		_method_buttons[str(method_id)] = method_button
-	method_row.add_child(UIKit.spacer_h())
 
 	_status = UIKit.label("", 11, UIKit.CORAL, true)
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -266,7 +267,7 @@ func _refresh() -> void:
 	var cost := _missing_cost()
 	var reserve := state.reserve_for_slot(slot)
 	var affordable := cost + reserve <= state.remaining()
-	_cost_label.text = "材料費 $%d · 補購後剩 $%d · %d kcal" % [cost, maxi(0, state.remaining() - cost), int(recipe.kcal)]
+	_cost_label.text = "材料費 $%d · 補購後剩 $%d" % [cost, maxi(0, state.remaining() - cost)]
 	if not affordable:
 		if cost <= state.remaining():
 			_confirm.text = "唔夠錢（要留 $%d）" % reserve

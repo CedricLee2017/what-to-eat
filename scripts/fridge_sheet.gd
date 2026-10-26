@@ -29,7 +29,7 @@ func _ready() -> void:
 	sheet.anchor_bottom = 1.0
 	sheet.offset_left = 0.0
 	sheet.offset_right = 0.0
-	sheet.offset_top = -920.0
+	sheet.offset_top = -840.0
 	sheet.offset_bottom = 0.0
 	var sheet_style := UIKit.box(UIKit.PAPER, 0, 24)
 	sheet_style.corner_radius_top_left = 34

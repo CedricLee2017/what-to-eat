@@ -27,7 +27,7 @@ func _ready() -> void:
 	_sheet.anchor_bottom = 1.0
 	_sheet.offset_left = 0.0
 	_sheet.offset_right = 0.0
-	_sheet.offset_top = -944.0
+	_sheet.offset_top = -840.0
 	_sheet.offset_bottom = 0.0
 	var sheet_style := UIKit.box(UIKit.PAPER, 0, 24)
 	sheet_style.corner_radius_top_left = 34
@@ -59,7 +59,9 @@ func _ready() -> void:
 	header.add_child(title_box)
 	title_box.add_child(UIKit.label("%s食咩好？" % MealData.MEAL_NAMES[slot], 29, UIKit.INK, true))
 	var subtitle := "預算剩 $%d · 雪櫃 %d 件 · %s · 特價 %s" % [state.remaining(), state.fridge_total(), state.market_note(), "、".join(state.sale_names())]
-	title_box.add_child(UIKit.label(subtitle, 12, UIKit.MUTED, false))
+	var subtitle_label := UIKit.wrapped(subtitle, 13, UIKit.MUTED, false)
+	subtitle_label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	title_box.add_child(subtitle_label)
 
 	var close_button := UIKit.ghost_button("×", UIKit.MUTED, 28, Vector2(44, 44))
 	close_button.pressed.connect(_close)
@@ -86,7 +88,7 @@ func _ready() -> void:
 	scroll.add_child(content)
 
 	var grid := GridContainer.new()
-	grid.columns = 2
+	grid.columns = 1
 	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid.add_theme_constant_override("h_separation", 10)
 	grid.add_theme_constant_override("v_separation", 10)
@@ -160,7 +162,7 @@ func _make_card(recipe: Dictionary) -> Button:
 	var reserve := state.reserve_for_slot(slot)
 
 	var card := Button.new()
-	card.custom_minimum_size = Vector2(0, 146)
+	card.custom_minimum_size = Vector2(0, 166)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.focus_mode = Control.FOCUS_NONE
 	card.disabled = not affordable
@@ -213,16 +215,22 @@ func _make_card(recipe: Dictionary) -> Button:
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(name_label)
 
+	var meta := HBoxContainer.new()
+	meta.add_theme_constant_override("separation", 6)
+	meta.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(meta)
+
 	var method_id := MealData.method_of(recipe)
 	var method_info := MealData.method_info(method_id)
 	var method_label := UIKit.label(str(method_info.name), 12, Color(method_info.color), true)
 	method_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	top.add_child(method_label)
+	meta.add_child(method_label)
 
 	var crown_badge := CrownBadge.new()
 	crown_badge.level = FoodBook.crown_level_for_recipe(str(recipe.id))
 	crown_badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	top.add_child(crown_badge)
+	meta.add_child(crown_badge)
+	meta.add_child(UIKit.spacer_h())
 
 	var price_color := UIKit.INK
 	if not affordable:
@@ -231,7 +239,7 @@ func _make_card(recipe: Dictionary) -> Button:
 		price_color = Color("#3F7D5F")
 	var price_label := UIKit.label("$%d" % price, 20, price_color, true)
 	price_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	top.add_child(price_label)
+	meta.add_child(price_label)
 
 	var ingredients := UIKit.label(MealData.item_names(recipe), 13, UIKit.MUTED, false)
 	ingredients.clip_text = true

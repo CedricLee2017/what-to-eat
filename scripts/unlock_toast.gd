@@ -14,8 +14,8 @@ func setup(events: Array) -> void:
 	holder.anchor_right = 0.5
 	holder.anchor_top = 0.0
 	holder.anchor_bottom = 0.0
-	holder.offset_left = -196.0
-	holder.offset_right = 196.0
+	holder.offset_left = -220.0
+	holder.offset_right = 220.0
 	holder.offset_top = 24.0
 	holder.offset_bottom = 0.0
 	holder.alignment = BoxContainer.ALIGNMENT_BEGIN

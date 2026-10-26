@@ -20,7 +20,7 @@ const SLOT_COLORS := [
 
 func _ready() -> void:
 	focus_mode = Control.FOCUS_NONE
-	custom_minimum_size = Vector2(0, 242)
+	custom_minimum_size = Vector2(0, 230)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	clip_contents = false
 	text = ""

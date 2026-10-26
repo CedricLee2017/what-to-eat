@@ -171,9 +171,9 @@ func _make_line_edit(placeholder: String, max_length: int, secret: bool) -> Line
 	edit.placeholder_text = placeholder
 	edit.max_length = max_length
 	edit.secret = secret
-	edit.custom_minimum_size.y = 46
+	edit.custom_minimum_size.y = 56
 	edit.add_theme_font_override("font", UIKit.font(false))
-	edit.add_theme_font_size_override("font_size", 18)
+	edit.add_theme_font_size_override("font_size", UIKit.scaled_font(18))
 	edit.add_theme_color_override("font_color", UIKit.INK)
 	edit.add_theme_color_override("font_placeholder_color", Color(0.6, 0.56, 0.5, 0.6))
 	edit.add_theme_stylebox_override("normal", UIKit.box(UIKit.CREAM, 16, 0, UIKit.LINE, 1, 12))

@@ -27,16 +27,28 @@ func _ready() -> void:
 	modulate.a = 0.0
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 32)
-	margin.add_theme_constant_override("margin_right", 32)
-	margin.add_theme_constant_override("margin_top", 32)
-	margin.add_theme_constant_override("margin_bottom", 28)
+	margin.add_theme_constant_override("margin_left", 18)
+	margin.add_theme_constant_override("margin_right", 18)
+	margin.add_theme_constant_override("margin_top", 18)
+	margin.add_theme_constant_override("margin_bottom", 16)
 	add_child(margin)
+
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var scroll_theme := Theme.new()
+	scroll_theme.set_stylebox("scroll", "VScrollBar", StyleBoxEmpty.new())
+	scroll_theme.set_stylebox("grabber", "VScrollBar", UIKit.box(UIKit.LINE, 3))
+	scroll.theme = scroll_theme
+	margin.add_child(scroll)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	margin.add_child(box)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(box)
 
 	var header := HBoxContainer.new()
 	box.add_child(header)

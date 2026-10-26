@@ -37,8 +37,8 @@ func _ready() -> void:
 	_sheet.anchor_right = 0.5
 	_sheet.anchor_top = 0.5
 	_sheet.anchor_bottom = 0.5
-	_sheet.offset_left = -320.0
-	_sheet.offset_right = 320.0
+	_sheet.offset_left = -228.0
+	_sheet.offset_right = 228.0
 	_sheet.offset_top = -440.0
 	_sheet.offset_bottom = 440.0
 	_sheet.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 34, 22, Color.TRANSPARENT, 0, 24))

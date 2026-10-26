@@ -197,10 +197,10 @@ func _add_import_row() -> void:
 	_content.add_child(import_row)
 	_import_edit = LineEdit.new()
 	_import_edit.placeholder_text = "貼上朋友嘅 EAT1: 分享碼"
-	_import_edit.custom_minimum_size.y = 40
+	_import_edit.custom_minimum_size.y = 52
 	_import_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_import_edit.add_theme_font_override("font", UIKit.font(false))
-	_import_edit.add_theme_font_size_override("font_size", 12)
+	_import_edit.add_theme_font_size_override("font_size", UIKit.scaled_font(12))
 	_import_edit.add_theme_color_override("font_color", UIKit.INK)
 	_import_edit.add_theme_color_override("font_placeholder_color", Color(0.6, 0.56, 0.5, 0.6))
 	_import_edit.add_theme_stylebox_override("normal", UIKit.box(UIKit.CREAM, 14, 0, UIKit.LINE, 1, 9))

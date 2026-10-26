@@ -22,16 +22,28 @@ func _ready() -> void:
 	sheet.anchor_right = 0.5
 	sheet.anchor_top = 0.5
 	sheet.anchor_bottom = 0.5
-	sheet.offset_left = -320.0
-	sheet.offset_right = 320.0
+	sheet.offset_left = -260.0
+	sheet.offset_right = 260.0
 	sheet.offset_top = -425.0
 	sheet.offset_bottom = 425.0
 	sheet.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 34, 22, Color.TRANSPARENT, 0, 24))
 	add_child(sheet)
 
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var scroll_theme := Theme.new()
+	scroll_theme.set_stylebox("scroll", "VScrollBar", StyleBoxEmpty.new())
+	scroll_theme.set_stylebox("grabber", "VScrollBar", UIKit.box(UIKit.LINE, 3))
+	scroll.theme = scroll_theme
+	sheet.add_child(scroll)
+
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	sheet.add_child(box)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(box)
 
 	var header := HBoxContainer.new()
 	box.add_child(header)

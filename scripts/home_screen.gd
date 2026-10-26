@@ -40,15 +40,27 @@ func _ready() -> void:
 func _build() -> void:
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 26)
-	margin.add_theme_constant_override("margin_right", 26)
-	margin.add_theme_constant_override("margin_top", 26)
-	margin.add_theme_constant_override("margin_bottom", 22)
+	margin.add_theme_constant_override("margin_left", 18)
+	margin.add_theme_constant_override("margin_right", 18)
+	margin.add_theme_constant_override("margin_top", 18)
+	margin.add_theme_constant_override("margin_bottom", 16)
 	add_child(margin)
 
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var scroll_theme := Theme.new()
+	scroll_theme.set_stylebox("scroll", "VScrollBar", StyleBoxEmpty.new())
+	scroll_theme.set_stylebox("grabber", "VScrollBar", UIKit.box(UIKit.LINE, 3))
+	scroll.theme = scroll_theme
+	margin.add_child(scroll)
+
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 12)
-	margin.add_child(box)
+	box.add_theme_constant_override("separation", 10)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(box)
 
 	# ── 頂欄 ─────────────────────────────────────────
 	var header := HBoxContainer.new()
@@ -81,10 +93,7 @@ func _build() -> void:
 	weather_chip.add_child(weather_margin)
 	header.add_child(weather_chip)
 
-	var mode_chip := _make_chip(UIKit.CORAL_SOFT if state.mode == "daily" else UIKit.MINT_SOFT, UIKit.CORAL if state.mode == "daily" else Color("#3F7D5F"))
-	mode_chip.label.text = "每日挑戰" if state.mode == "daily" else "自由煮飯"
-	header.add_child(mode_chip.panel)
-
+	# 手機闊度優先：模式已經喺標題／語音提示，不再佔頂欄位置。
 	header.add_child(UIKit.spacer_h())
 
 	var menu_button := UIKit.button("目錄", UIKit.PAPER, UIKit.INK, 14, 13, true, Vector2(58, 36))
@@ -164,10 +173,10 @@ func _build() -> void:
 	sale_row.add_theme_constant_override("separation", 8)
 	budget_box.add_child(sale_row)
 	sale_row.add_child(UIKit.pill("是日特價", UIKit.MINT_SOFT, Color("#3F7D5F"), 11))
-	_sale_label = UIKit.label("", 12, UIKit.MUTED, false)
+	_sale_label = UIKit.wrapped("", 12, UIKit.MUTED, false)
 	_sale_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_sale_label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	sale_row.add_child(_sale_label)
-	sale_row.add_child(UIKit.spacer_h())
 
 	_fridge_button = UIKit.button("雪櫃 0", UIKit.MINT_SOFT, Color("#3F7D5F"), 14, 13, true, Vector2(98, 32))
 	_fridge_button.add_theme_stylebox_override("normal", UIKit.box(UIKit.MINT_SOFT, 14, 0, Color.TRANSPARENT, 0, 7))
@@ -181,7 +190,7 @@ func _build() -> void:
 
 	# ── 角色 + 對白 ───────────────────────────────────
 	var character_panel := UIKit.panel(UIKit.SUN_SOFT, 30, 0, Color.TRANSPARENT, 0, 12)
-	character_panel.custom_minimum_size.y = 300
+	character_panel.custom_minimum_size.y = 250
 	character_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(character_panel)
 
@@ -190,7 +199,7 @@ func _build() -> void:
 	character_panel.add_child(character_row)
 
 	_character = CharacterArt.new()
-	_character.custom_minimum_size = Vector2(236, 300)
+	_character.custom_minimum_size = Vector2(200, 250)
 	_character.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_character.size_flags_horizontal = Control.SIZE_FILL
 	character_row.add_child(_character)
@@ -210,7 +219,7 @@ func _build() -> void:
 	talk_header.add_child(_meal_progress)
 
 	var bubble := UIKit.panel(UIKit.PAPER, 22, 4, Color.TRANSPARENT, 0, 16)
-	bubble.custom_minimum_size.y = 104
+	bubble.custom_minimum_size.y = 90
 	talk.add_child(bubble)
 	_speech_label = UIKit.wrapped("無工一身輕。今日，食咩好？", 19, UIKit.INK, false)
 	_speech_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

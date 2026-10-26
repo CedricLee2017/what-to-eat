@@ -28,10 +28,10 @@ func _ready() -> void:
 	panel.anchor_right = 0.5
 	panel.anchor_top = 0.5
 	panel.anchor_bottom = 0.5
-	panel.offset_left = -310.0
-	panel.offset_right = 310.0
-	panel.offset_top = -240.0
-	panel.offset_bottom = 240.0
+	panel.offset_left = -228.0
+	panel.offset_right = 228.0
+	panel.offset_top = -280.0
+	panel.offset_bottom = 280.0
 	panel.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 30, 20, Color.TRANSPARENT, 0, 22))
 	add_child(panel)
 
@@ -66,9 +66,9 @@ func _ready() -> void:
 	_code = LineEdit.new()
 	_code.text = code
 	_code.editable = false
-	_code.custom_minimum_size.y = 44
+	_code.custom_minimum_size.y = 54
 	_code.add_theme_font_override("font", UIKit.font(false))
-	_code.add_theme_font_size_override("font_size", 11)
+	_code.add_theme_font_size_override("font_size", UIKit.scaled_font(11))
 	_code.add_theme_color_override("font_color", UIKit.INK)
 	_code.add_theme_color_override("font_uneditable_color", UIKit.INK)
 	_code.add_theme_stylebox_override("normal", UIKit.box(UIKit.CREAM, 14, 0, UIKit.LINE, 1, 10))

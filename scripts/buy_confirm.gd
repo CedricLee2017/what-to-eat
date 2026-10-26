@@ -30,17 +30,14 @@ func _ready() -> void:
 		var name := str(MealData.INGREDIENTS[item_id].name)
 		missing_names.append(name if amount <= 1 else "%s ×%d" % [name, amount])
 
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(center)
+
 	var panel := PanelContainer.new()
-	panel.anchor_left = 0.5
-	panel.anchor_right = 0.5
-	panel.anchor_top = 0.5
-	panel.anchor_bottom = 0.5
-	panel.offset_left = -290.0
-	panel.offset_right = 290.0
-	panel.offset_top = -260.0
-	panel.offset_bottom = 260.0
+	panel.custom_minimum_size.x = 456.0
 	panel.add_theme_stylebox_override("panel", UIKit.box(UIKit.PAPER, 30, 20, Color.TRANSPARENT, 0, 24))
-	add_child(panel)
+	center.add_child(panel)
 
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
